@@ -1,6 +1,6 @@
 <#include "security.ftl">
 
-<#list records as record>
+<#list page.content as record>
     <tr>
         <td>
             <a href="/user-records/${record.author.id}?record=${record.id}">${record.date}</a>
@@ -29,3 +29,4 @@
 <#else>
     No Records
 </#list>
+

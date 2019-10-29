@@ -1,6 +1,10 @@
 package ua.Nazar.Rep.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,14 +32,19 @@ public class RecordController {
     }
 
     @GetMapping("/")
-    public String getRecords(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-        Iterable<Record> records = recordRepo.findAll();
+    public String getRecords(
+            @RequestParam(required = false, defaultValue = "") String filter,
+            Model model,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        Page<Record> page = recordRepo.findAll(pageable);
 
         if (filter != null && !filter.isEmpty()) {
-            records = recordRepo.findAllByDateStartingWith(filter);
+            page = recordRepo.findAllByDateStartingWith(filter, pageable);
         }
 
-        model.addAttribute("records", records);
+        model.addAttribute("page", page);
+        model.addAttribute("url", "/");
         model.addAttribute("filter", filter);
 
         return "records";
@@ -47,15 +56,17 @@ public class RecordController {
             @PathVariable User user,
             Model model,
             @RequestParam(required = false) Record record,
-            @RequestParam(required = false, defaultValue = "") String filter
+            @RequestParam(required = false, defaultValue = "") String filter,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        Iterable<Record> records = user.getRecords();
+        Iterable<Record> page = recordRepo.findAllByAuthor(user,pageable);
 
         if (filter != null && !filter.isEmpty()) {
-            records = recordRepo.findAllByDateStartingWithAndAuthor(filter,user);
+            page = recordRepo.findAllByDateStartingWithAndAuthor(filter, user,pageable);
         }
 
-        model.addAttribute("records", records);
+        model.addAttribute("page", page);
+        model.addAttribute("url", "/user-records/"+user.getId());
         model.addAttribute("record", record);
         model.addAttribute("isCurrentUser", currentUser.equals(user));
         model.addAttribute("filter", filter);
@@ -70,19 +81,20 @@ public class RecordController {
             //@RequestParam(required = false, name = "id") Record oldRecord,
             @Valid Record record,
             BindingResult bindingResult,
-            Model model
+            Model model,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
 
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
-            if(!(record.getId() == null)) {
+            if (!(record.getId() == null)) {
                 Record record2 = recordRepo.findById(record.getId()).orElse(null);
 //                model.addAttribute("record", record2);
             }
 //            model.addAttribute("record", record);
-            Iterable<Record> records = user.getRecords();
-            model.addAttribute("records", records);
+            Page<Record> page = recordRepo.findAllByAuthor(user, pageable);
+            model.addAttribute("page", page);
             model.addAttribute("isCurrentUser", currentUser.equals(user));
             return "userRecords";
 
@@ -91,8 +103,8 @@ public class RecordController {
             model.addAttribute("record", null);
             recordRepo.save(record);
 
-            Iterable<Record> records = user.getRecords();
-            model.addAttribute("records", records);
+            Page<Record> page = recordRepo.findAllByAuthor(user, pageable);
+            model.addAttribute("page", page);
             model.addAttribute("isCurrentUser", currentUser.equals(user));
         }
 

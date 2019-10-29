@@ -1,4 +1,5 @@
 <#import "parts/common.ftl" as c>
+<#import "parts/pager.ftl" as p>
 
 <@c.page>
     <div class="form-row">
@@ -9,8 +10,11 @@
             </form>
         </div>
     </div>
+    <#if page.content??>
+        <@p.pager url page/>
+    </#if>
 
-    <table class="table table-sm">
+    <table class="table table-striped">
         <thead>
         <tr>
             <th scope="col">Date</th>
@@ -26,4 +30,8 @@
         <#include "parts/recordList.ftl" />
         </tbody>
     </table>
+    <#if page.content??>
+        <@p.pager url page/>
+    </#if>
+
 </@c.page>
