@@ -1,6 +1,6 @@
 <tr>
     <td>
-        <div class="form-group">
+        <div class="form-group m-0">
             <input type="text" name="date"
                    value="<#if record??>${record.date}</#if>"
                    class="form-control ${(dateError??)?string('is-invalid', '')}" placeholder="Date" />
@@ -12,7 +12,7 @@
         </div>
     </td>
     <td>
-        <div class="form-group">
+        <div class="form-group m-0">
             <input type="text" class="form-control ${(temperatureError??)?string('is-invalid', '')}"
                    value="<#if record??>${record.temperature}</#if>" name="temperature" placeholder="Temperature" />
             <#if temperatureError??>
@@ -23,7 +23,7 @@
         </div>
     </td>
     <td>
-        <div class="form-group">
+        <div class="form-group m-0">
             <input type="text" class="form-control ${(windSpeedError??)?string('is-invalid', '')}"
                    value="<#if record??>${record.windSpeed}</#if>" name="windSpeed" placeholder="WindSpeed" />
             <#if windSpeedError??>
@@ -34,7 +34,7 @@
         </div>
     </td>
     <td>
-        <div class="form-group">
+        <div class="form-group m-0">
             <input type="text" class="form-control ${(windAngleError??)?string('is-invalid', '')}"
                    value="<#if record??>${record.windAngle}</#if>" name="windAngle" placeholder="WindAngle" />
             <#if windAngleError??>
@@ -45,7 +45,7 @@
         </div>
     </td>
     <td>
-        <div class="form-group">
+        <div class="form-group m-0">
             <input type="text" class="form-control ${(pressureError??)?string('is-invalid', '')}"
                    value="<#if record??>${record.pressure}</#if>" name="pressure" placeholder="Pressure" />
             <#if pressureError??>
@@ -56,9 +56,9 @@
         </div>
     </td>
 
-    <td class="form-group">
+    <td>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <div class="form-group">
+        <div class="form-group m-0">
             <button type="submit" class="btn btn-primary">Save</button>
         </div>
     </td>

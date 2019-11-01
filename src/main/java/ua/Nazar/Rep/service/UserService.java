@@ -31,14 +31,14 @@ public class UserService implements UserDetailsService {
         this.mailSender = mailSender;
     }
 
-    /*
-        private PasswordEncoder passwordEncoder;
 
-        @Autowired
-        public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-            this.passwordEncoder = passwordEncoder;
-        }
-    */
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByUsername(username);
@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.ADMIN));
         user.setActivationCode(UUID.randomUUID().toString());
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
 
         sendMessage(user);
@@ -109,15 +109,12 @@ public class UserService implements UserDetailsService {
     ) {
 
         String userEmail = user.getEmail();
-        String userPassword = user.getPassword();
 
         boolean isEmailChanged =
                 ((email != null && !email.equals(userEmail)) ||
                         (userEmail != null && !userEmail.equals(email))
                 ) && !StringUtils.isEmpty(email);
 
-        boolean isPasswordChanged = (password != null && !password.equals(userPassword)) ||
-                (userPassword != null && !userPassword.equals(password));
 
         if (!StringUtils.isEmpty(username)) {
             user.setUsername(username);
@@ -128,10 +125,8 @@ public class UserService implements UserDetailsService {
             user.setActivationCode(UUID.randomUUID().toString());
         }
 
-        if (isPasswordChanged) {
-            if (!StringUtils.isEmpty(password)) {
-                user.setPassword(password);
-            }
+        if (!StringUtils.isEmpty(password)) {
+            user.setPassword(passwordEncoder.encode(password));
         }
 
         Set<String> roles = Arrays.stream(Role.values())
@@ -168,7 +163,7 @@ public class UserService implements UserDetailsService {
         }
 
         if (!StringUtils.isEmpty(password)) {
-            user.setPassword(password);
+            user.setPassword(passwordEncoder.encode(password));
         }
 
         userRepo.save(user);
