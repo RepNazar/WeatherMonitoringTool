@@ -5,13 +5,14 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <form method="get" action="/" class="form-inline">
-                <input type="text" name="filter" class="form-control" value="${filter?ifExists}" placeholder="Date starts with">
+                <input type="text" name="filter" class="form-control" value="${filter!}" placeholder="Date starts with">
                 <button type="submit" class="btn btn-primary ml-2"><i class="fas fa-search"></i></button>
             </form>
         </div>
     </div>
-    <#if page.content??>
-        <@p.pager url page/>
+
+    <#if page.getTotalElements() gt 25>
+        <@p.pager "/" page/>
     </#if>
 
     <table class="table table-striped">
@@ -27,11 +28,11 @@
         </thead>
 
         <tbody>
-        <#include "parts/recordList.ftl" />
+        No Records
         </tbody>
     </table>
-    <#if page.content??>
-        <@p.pager url page/>
+    <#if page.getTotalElements() gt 25>
+        <@p.pager "/" page/>
     </#if>
 
 </@c.page>

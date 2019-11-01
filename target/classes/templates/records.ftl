@@ -10,8 +10,9 @@
             </form>
         </div>
     </div>
-    <#if page.content??>
-        <@p.pager url page/>
+
+    <#if page.getTotalElements() gt 25>
+        <@p.pager "/" page/>
     </#if>
 
     <table class="table table-striped">
@@ -30,8 +31,8 @@
         <#include "parts/recordList.ftl" />
         </tbody>
     </table>
-    <#if page.content??>
-        <@p.pager url page/>
+    <#if page.getTotalElements() gt 25>
+        <@p.pager "/" page/>
     </#if>
 
 </@c.page>

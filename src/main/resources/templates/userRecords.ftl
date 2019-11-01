@@ -8,7 +8,7 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <form method="get" action="/user-records/${user.id}" class="form-inline">
-                <input type="text" name="filter" class="form-control" value="${filter?ifExists}" placeholder="Date starts with">
+                <input type="text" name="filter" class="form-control" value="${filter!}" placeholder="Date starts with">
                 <button type="submit" class="btn btn-primary ml-2"><i class="fas fa-search"></i></button>
             </form>
         </div>

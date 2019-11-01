@@ -1,27 +1,25 @@
 <#import "parts/common.ftl" as c>
+<#import "parts/pager.ftl" as p>
 
 <@c.page>
-    <#if record??>
-        <h3>Record</h3>
-    </#if>
-    <#if dateError??>
-        <h3>DateError</h3>
-    </#if>
 
     <h4>Records by: ${user.username}</h4>
+
     <div class="form-row">
         <div class="form-group col-md-6">
             <form method="get" action="/user-records/${user.id}" class="form-inline">
-                <input type="text" name="filter" class="form-control" value="${filter?ifExists}" placeholder="Date starts with">
+                <input type="text" name="filter" class="form-control" value="${filter!}" placeholder="Date starts with">
                 <button type="submit" class="btn btn-primary ml-2"><i class="fas fa-search"></i></button>
             </form>
         </div>
     </div>
 
+    <@p.pager "/user-records/${user.id}" page/>
+
     <div class="form-group mt-3">
         <form method="post" enctype="multipart/form-data">
 
-            <table class="table table-sm">
+            <table class="table table-striped">
 
                 <thead>
                 <tr>
@@ -46,4 +44,7 @@
 
         </form>
     </div>
+
+    <@p.pager "/user-records/${user.id}" page/>
+
 </@c.page>

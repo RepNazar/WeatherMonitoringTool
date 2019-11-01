@@ -35,9 +35,10 @@ public class RecordController {
     public String getRecords(
             @RequestParam(required = false, defaultValue = "") String filter,
             Model model,
-            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 25) Pageable pageable
     ) {
         Page<Record> page = recordRepo.findAll(pageable);
+
 
         if (filter != null && !filter.isEmpty()) {
             page = recordRepo.findAllByDateStartingWith(filter, pageable);
@@ -57,16 +58,16 @@ public class RecordController {
             Model model,
             @RequestParam(required = false) Record record,
             @RequestParam(required = false, defaultValue = "") String filter,
-            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 25) Pageable pageable
     ) {
-        Iterable<Record> page = recordRepo.findAllByAuthor(user,pageable);
+        Iterable<Record> page = recordRepo.findAllByAuthor(user, pageable);
 
         if (filter != null && !filter.isEmpty()) {
-            page = recordRepo.findAllByDateStartingWithAndAuthor(filter, user,pageable);
+            page = recordRepo.findAllByDateStartingWithAndAuthor(filter, user, pageable);
         }
 
         model.addAttribute("page", page);
-        model.addAttribute("url", "/user-records/"+user.getId());
+        model.addAttribute("url", "/user-records/" + user.getId());
         model.addAttribute("record", record);
         model.addAttribute("isCurrentUser", currentUser.equals(user));
         model.addAttribute("filter", filter);

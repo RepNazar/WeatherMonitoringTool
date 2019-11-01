@@ -46,8 +46,13 @@
                         <a class="page-link" href="#" tabindex="-1">${c}</a>
                     </li>
                 <#else>
+                    <#assign nextTotalPages=(page.getTotalPages()*page.getSize()/c)?floor>
                     <li class="page-item">
-                        <a class="page-link" href="${url}?page=${page.getNumber()}&size=${c}" tabindex="-1">${c}</a>
+                        <a class="page-link"
+                           href="${url}?page=${(page.getNumber() gt nextTotalPages)?
+                           string('${nextTotalPages}','${page.getNumber()}')}&size=${c}" tabindex="-1">
+                            ${c}
+                        </a>
                     </li>
                 </#if>
             </#list>
