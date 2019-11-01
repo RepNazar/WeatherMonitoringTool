@@ -45,7 +45,6 @@ public class RecordController {
         }
 
         model.addAttribute("page", page);
-        model.addAttribute("url", "/");
         model.addAttribute("filter", filter);
 
         return "records";
@@ -67,7 +66,6 @@ public class RecordController {
         }
 
         model.addAttribute("page", page);
-        model.addAttribute("url", "/user-records/" + user.getId());
         model.addAttribute("record", record);
         model.addAttribute("isCurrentUser", currentUser.equals(user));
         model.addAttribute("filter", filter);
@@ -113,11 +111,11 @@ public class RecordController {
 
     }
 
-    @GetMapping("/user-records/{user}/delete/{id}")
+    @PostMapping("/user-records/{user}/delete")
     public String deleteRecord(
             @AuthenticationPrincipal User currentUser,
             @PathVariable Long user,
-            @PathVariable("id") Long id,
+            @RequestParam Long id,
             Model model
     ) {
         if (user.equals(currentUser.getId())) {

@@ -1,5 +1,4 @@
 <#include "security.ftl">
-
 <#list page.content as record>
     <tr>
         <td>
@@ -19,14 +18,21 @@
         </td>
         <td>
             <#if record.author.id == currentUserId>
-                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                <a href="/user-records/${record.author.id}/delete/${record.id}">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
+                <form method="post" action="/user-records/${record.author.id}/delete">
+                    <input type="hidden" name="id" value="${record.id}"/>
+                    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                    <div class="form-group m-0">
+                        <button type = "submit" class ="btn btn-link p-0" style="line-height: normal!important;">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </form>
             </#if>
         </td>
     </tr>
 <#else>
-    No Records
+    <tr>
+        <td>No Records</td>
+    </tr>
 </#list>
 

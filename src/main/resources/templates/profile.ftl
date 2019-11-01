@@ -2,8 +2,8 @@
 
 <@c.page>
     <h5>${username}</h5>
-    ${message?ifExists}
-    <form method="post">
+    ${message!}
+    <form method="post" action="/user/profile">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">New Password:</label>
             <div class="col-sm-6">

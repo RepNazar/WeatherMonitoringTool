@@ -2,11 +2,15 @@
 <#import "parts/pager.ftl" as p>
 
 <@c.page>
+
     <div class="form-row">
         <div class="form-group col-md-6">
             <form method="get" action="/" class="form-inline">
-                <input type="text" name="filter" class="form-control" value="${filter!}" placeholder="Date starts with">
-                <button type="submit" class="btn btn-primary ml-2"><i class="fas fa-search"></i></button>
+                <input type="text" name="filter" class="form-control"
+                       value="${filter!}" placeholder="Date starts with">
+                <button type="submit" class="btn btn-primary ml-2">
+                    <i class="fas fa-search"></i>
+                </button>
             </form>
         </div>
     </div>
@@ -15,7 +19,7 @@
         <@p.pager "/" page/>
     </#if>
 
-    <table class="table table-striped">
+    <table class="table table-sm table-striped">
         <thead>
         <tr>
             <th scope="col">Date</th>
@@ -28,7 +32,7 @@
         </thead>
 
         <tbody>
-        No Records
+        <#include "parts/recordList.ftl">
         </tbody>
     </table>
     <#if page.getTotalElements() gt 25>
