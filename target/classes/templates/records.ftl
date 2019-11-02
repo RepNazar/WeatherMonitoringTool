@@ -7,7 +7,7 @@
         <div class="form-group col-md-6">
             <form method="get" action="/" class="form-inline">
                 <input type="text" name="filter" class="form-control"
-                       value="${filter!}" placeholder="Date starts with">
+                       value="${filter!}" placeholder="Date starts with" />
                 <button type="submit" class="btn btn-primary ml-2">
                     <i class="fas fa-search"></i>
                 </button>
@@ -31,7 +31,7 @@
         </tr>
         </thead>
 
-        <tbody>
+        <tbody id="records-list">
         <#include "parts/recordList.ftl">
         </tbody>
     </table>

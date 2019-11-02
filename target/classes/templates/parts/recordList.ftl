@@ -1,19 +1,19 @@
 <#include "security.ftl">
 <#list page.content as record>
-    <tr>
-        <td>
+    <tr data-id="${record.id}">
+        <td data-type="date">
             <a href="/user-records/${record.author.id}?record=${record.id}">${record.date}</a>
         </td>
-        <td>
+        <td data-type="temperature">
             <a href="/user-records/${record.author.id}?record=${record.id}">${record.temperature}</a>
         </td>
-        <td>
+        <td data-type="windSpeed">
             <a href="/user-records/${record.author.id}?record=${record.id}">${record.windSpeed}</a>
         </td>
-        <td>
+        <td data-type="windAngle">
             <a href="/user-records/${record.author.id}?record=${record.id}">${record.windAngle}</a>
         </td>
-        <td>
+        <td data-type="pressure">
             <a href="/user-records/${record.author.id}?record=${record.id}">${record.pressure}</a>
         </td>
         <td>
