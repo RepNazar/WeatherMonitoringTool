@@ -115,15 +115,12 @@ public class RecordController {
     public String deleteRecord(
             @AuthenticationPrincipal User currentUser,
             @PathVariable Long user,
-            @RequestParam Long id,
-            Model model
+            @RequestParam Long id
     ) {
         if (user.equals(currentUser.getId())) {
             recordRepo.deleteById(id);
         }
-        Iterable<Record> records = recordRepo.findAll();
 
-        model.addAttribute("records", records);
         return "redirect:/user-records/" + user;
     }
 
@@ -168,7 +165,7 @@ public class RecordController {
 
             return "redirect:/user-records/" + user;
         }
-    */
+
     @PostMapping("/")
     public String addRecord(
             @AuthenticationPrincipal User currentUser,
@@ -191,5 +188,5 @@ public class RecordController {
 
         return "records";
     }
-
+*/
 }
