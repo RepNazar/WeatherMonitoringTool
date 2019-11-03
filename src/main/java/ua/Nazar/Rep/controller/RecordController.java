@@ -19,7 +19,6 @@ import ua.Nazar.Rep.repos.RecordRepo;
 
 import javax.validation.Valid;
 import java.util.Map;
-import java.util.Set;
 
 @Controller
 public class RecordController {
@@ -77,7 +76,6 @@ public class RecordController {
     public String updateRecord(
             @AuthenticationPrincipal User currentUser,
             @PathVariable User user,
-            //@RequestParam(required = false, name = "id") Record oldRecord,
             @Valid Record record,
             BindingResult bindingResult,
             Model model,
@@ -87,12 +85,10 @@ public class RecordController {
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
-            if (!(record.getId() == null)) {
-                Record record2 = recordRepo.findById(record.getId()).orElse(null);
-//                model.addAttribute("record", record2);
-            }
-//            model.addAttribute("record", record);
+
             Page<Record> page = recordRepo.findAllByAuthor(user, pageable);
+
+            model.addAttribute("record", record);
             model.addAttribute("page", page);
             model.addAttribute("isCurrentUser", currentUser.equals(user));
             return "userRecords";
@@ -103,6 +99,7 @@ public class RecordController {
             recordRepo.save(record);
 
             Page<Record> page = recordRepo.findAllByAuthor(user, pageable);
+
             model.addAttribute("page", page);
             model.addAttribute("isCurrentUser", currentUser.equals(user));
         }

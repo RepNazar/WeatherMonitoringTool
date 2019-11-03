@@ -5,17 +5,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.Nazar.Rep.domain.Role;
 import ua.Nazar.Rep.domain.User;
 import ua.Nazar.Rep.service.UserService;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Email;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
