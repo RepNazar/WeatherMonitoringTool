@@ -48,7 +48,7 @@ public class RecordControllerTest {
     }
 
     @Test
-    public void messageListTest() throws Exception {
+    public void recordsListTest() throws Exception {
         this.mockMvc.perform(get("/"))
                 .andDo(print())
                 .andExpect(authenticated())
@@ -57,7 +57,21 @@ public class RecordControllerTest {
     }
 
     @Test
-    public void filterMessageTest() throws Exception {
+    public void userRecordsListTest() throws Exception {
+        this.mockMvc.perform(get("/user-records/1"))
+                .andDo(print())
+                .andExpect(authenticated())
+                .andExpect(xpath("//*[@id='records-list']/tr")
+                        .nodeCount(3));
+        this.mockMvc.perform(get("/user-records/2"))
+                .andDo(print())
+                .andExpect(authenticated())
+                .andExpect(xpath("//*[@id='records-list']/tr")
+                        .nodeCount(1));
+    }
+
+    @Test
+    public void filterRecordsTest() throws Exception {
         this.mockMvc.perform(get("/").param("filter", "0"))
                 .andDo(print())
                 .andExpect(authenticated())
@@ -70,9 +84,22 @@ public class RecordControllerTest {
                 .andExpect(
                         xpath("//*[@id='records-list']/tr[@data-id='1']/td[@data-type='temperature']")
                                 .exists())
-                .andExpect(xpath("//*[@id='records-list']/tr[@data-id='1']/td[@data-type='windSpeed']").exists())
-                .andExpect(xpath("//*[@id='records-list']/tr[@data-id='1']/td[@data-type='windAngle']").exists())
-                .andExpect(xpath("//*[@id='records-list']/tr[@data-id='1']/td[@data-type='pressure']").exists());
+                .andExpect(
+                        xpath("//*[@id='records-list']/tr[@data-id='1']/td[@data-type='windSpeed']")
+                                .exists())
+                .andExpect(
+                        xpath("//*[@id='records-list']/tr[@data-id='1']/td[@data-type='windAngle']")
+                                .exists())
+                .andExpect(
+                        xpath("//*[@id='records-list']/tr[@data-id='1']/td[@data-type='pressure']")
+                                .exists());
+
+        this.mockMvc.perform(get("/").param("filter", "1"))
+                .andDo(print())
+                .andExpect(authenticated())
+                .andExpect(
+                        xpath("//*[@id='records-list']/tr")
+                                .nodeCount(1));
     }
 
     @Test
@@ -98,13 +125,26 @@ public class RecordControllerTest {
         this.mockMvc.perform(get("/"))
                 .andDo(print())
                 .andExpect(authenticated())
-                .andExpect(xpath("//*[@id='records-list']/tr").nodeCount(5))
-                .andExpect(xpath("//*[@id='records-list']/tr[@data-id='10']").exists())
-                .andExpect(xpath("//*[@id='records-list']/tr[@data-id='10']/td[@data-type='date']/a").string("1"))
-                .andExpect(xpath("//*[@id='records-list']/tr[@data-id='10']/td[@data-type='temperature']/a").string("2"))
-                .andExpect(xpath("//*[@id='records-list']/tr[@data-id='10']/td[@data-type='windSpeed']/a").string("3"))
-                .andExpect(xpath("//*[@id='records-list']/tr[@data-id='10']/td[@data-type='windAngle']/a").string("4"))
-                .andExpect(xpath("//*[@id='records-list']/tr[@data-id='10']/td[@data-type='pressure']/a").string("5"));
-
+                .andExpect(
+                        xpath("//*[@id='records-list']/tr")
+                                .nodeCount(5))
+                .andExpect(
+                        xpath("//*[@id='records-list']/tr[@data-id='10']")
+                                .exists())
+                .andExpect(
+                        xpath("//*[@id='records-list']/tr[@data-id='10']/td[@data-type='date']/a")
+                                .string("1"))
+                .andExpect(
+                        xpath("//*[@id='records-list']/tr[@data-id='10']/td[@data-type='temperature']/a")
+                                .string("2"))
+                .andExpect(
+                        xpath("//*[@id='records-list']/tr[@data-id='10']/td[@data-type='windSpeed']/a")
+                                .string("3"))
+                .andExpect(
+                        xpath("//*[@id='records-list']/tr[@data-id='10']/td[@data-type='windAngle']/a")
+                                .string("4"))
+                .andExpect(
+                        xpath("//*[@id='records-list']/tr[@data-id='10']/td[@data-type='pressure']/a")
+                                .string("5"));
     }
 }

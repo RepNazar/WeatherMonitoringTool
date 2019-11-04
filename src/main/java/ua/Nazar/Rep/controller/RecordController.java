@@ -58,7 +58,7 @@ public class RecordController {
             @RequestParam(required = false, defaultValue = "") String filter,
             @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 25) Pageable pageable
     ) {
-        Iterable<Record> page = recordRepo.findAllByAuthor(user, pageable);
+        Page<Record> page = recordRepo.findAllByAuthor(user, pageable);
 
         if (filter != null && !filter.isEmpty()) {
             page = recordRepo.findAllByDateStartingWithAndAuthor(filter, user, pageable);
@@ -73,7 +73,7 @@ public class RecordController {
     }
 
     @PostMapping("/user-records/{user}")
-    public String updateRecord(
+    public String commitRecord(
             @AuthenticationPrincipal User currentUser,
             @PathVariable User user,
             @Valid Record record,
@@ -121,69 +121,4 @@ public class RecordController {
         return "redirect:/user-records/" + user;
     }
 
-    /*
-        @PostMapping("/user-records/{user}")
-        public String updateRecord(
-                @AuthenticationPrincipal User currentUser,
-                @PathVariable Long user,
-                @RequestParam(required = false, name = "id") Record record,
-                @RequestParam("date") String date,
-                @RequestParam("temperature") String temperature,
-                @RequestParam("windSpeed") String windSpeed,
-                @RequestParam("windAngle") String windAngle,
-                @RequestParam("pressure") String pressure
-        ) {
-            if(record == null){
-                record = new Record(date, temperature, windSpeed, windAngle, pressure, currentUser);
-            }else {
-                if (record.getAuthor().equals(currentUser)) {
-                    if (!StringUtils.isEmpty(date)) {
-                        record.setDate(date);
-                    }
-
-                    if (!StringUtils.isEmpty(temperature)) {
-                        record.setTemperature(temperature);
-                    }
-
-                    if (!StringUtils.isEmpty(windSpeed)) {
-                        record.setWindSpeed(windSpeed);
-                    }
-
-                    if (!StringUtils.isEmpty(windAngle)) {
-                        record.setWindAngle(windAngle);
-                    }
-
-                    if (!StringUtils.isEmpty(pressure)) {
-                        record.setPressure(pressure);
-                    }
-                }
-            }
-                recordRepo.save(record);
-
-            return "redirect:/user-records/" + user;
-        }
-
-    @PostMapping("/")
-    public String addRecord(
-            @AuthenticationPrincipal User currentUser,
-            @Valid Record record,
-            BindingResult bindingResult,
-            Model model
-    ) {
-        record.setAuthor(currentUser);
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
-            model.mergeAttributes(errorsMap);
-            model.addAttribute("record", record);
-        } else {
-            model.addAttribute("record", null);
-            recordRepo.save(record);
-        }
-        Iterable<Record> records = recordRepo.findAll();
-
-        model.addAttribute("records", records);
-
-        return "records";
-    }
-*/
 }

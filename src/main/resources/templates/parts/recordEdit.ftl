@@ -1,4 +1,4 @@
-<tr data-id="control">
+<tr>
     <td>
         <div class="form-group m-0">
             <input type="text" name="date"

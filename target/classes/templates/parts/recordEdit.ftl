@@ -1,4 +1,4 @@
-<tr data-id="control">
+<tr>
     <td>
         <div class="form-group m-0">
             <input type="text" name="date"
@@ -58,7 +58,7 @@
 
     <td>
         <input type="hidden" name="id" value="<#if record??>${record.id}</#if>" />
-        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+        <input type="hidden" name="_csrf" value="${_csrf.token}" />
         <div class="form-group m-0">
             <button type="submit" class="btn btn-primary">Save</button>
         </div>
