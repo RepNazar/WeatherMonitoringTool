@@ -64,23 +64,61 @@ public class UserService implements UserDetailsService {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.ADMIN));
         user.setActivationCode(UUID.randomUUID().toString());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userRepo.save(user);
 
-        sendMessage(user);
+        sendFullMessage(user, user.getPassword());
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return true;
     }
 
-    private void sendMessage(User user) {
+    private void sendActivationMessage(User user) {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
-                    "Hello, %s! \n" +
-                            "Welcome to our Weather monitoring team.\n" +
+                    "Hello, %s! \n\n" +
+                            "Welcome to our Weather monitoring team.\n\n" +
                             "Please, visit next link for your account activation: \n" +
                             "http://%s/activate/%s",
                     user.getUsername(),
+                    hostname,
+                    user.getActivationCode()
+            );
+
+            mailSender.send(user.getEmail(), "Activation code", message);
+        }
+    }
+
+    private void sendDataMessage(User user, String oldUsername, String password) {
+        if (!StringUtils.isEmpty(user.getEmail())) {
+            String message = String.format(
+                    "Hello, %s! \n\n" +
+                            "Your account data was changed:\n\n" +
+                            "Username:\n%s\n" +
+                            "Password:\n%s\n",
+                    oldUsername,
+                    user.getUsername(),
+                    password
+            );
+
+            mailSender.send(user.getEmail(), "Data Changed", message);
+        }
+    }
+
+    private void sendFullMessage(User user, String password) {
+        if (!StringUtils.isEmpty(user.getEmail())) {
+            String message = String.format(
+                    "Hello, %s! \n\n" +
+                            "Welcome to our Weather monitoring team.\n" +
+                            "Your account data is:\n\n" +
+                            "Username:\n%s\n" +
+                            "Password:\n%s\n\n" +
+                            "Please, visit next link for your account activation: \n" +
+                            "http://%s/activate/%s",
+                    user.getUsername(),
+                    user.getUsername(),
+                    password,
                     hostname,
                     user.getActivationCode()
             );
@@ -115,13 +153,17 @@ public class UserService implements UserDetailsService {
     ) {
 
         String userEmail = user.getEmail();
+        String userUsername = user.getUsername();
 
         boolean isEmailChanged =
                 ((email != null && !email.equals(userEmail)) ||
                         (userEmail != null && !userEmail.equals(email))
                 ) && !StringUtils.isEmpty(email);
 
-
+        boolean isUsernameChanged =
+                (username != null && !username.equals((userUsername)) ||
+                        userUsername != null && !userUsername.equals(username)
+                ) && !StringUtils.isEmpty(username);
         if (!StringUtils.isEmpty(username)) {
             user.setUsername(username);
         }
@@ -149,8 +191,12 @@ public class UserService implements UserDetailsService {
 
         userRepo.save(user);
 
-        if (isEmailChanged) {
-            sendMessage(user);
+        if (isUsernameChanged || !StringUtils.isEmpty(password)) {
+            if (isEmailChanged) {
+                sendFullMessage(user, password);
+            } else {
+                sendDataMessage(user, userUsername, password);
+            }
         }
 
     }
@@ -173,9 +219,14 @@ public class UserService implements UserDetailsService {
         }
 
         userRepo.save(user);
-
         if (isEmailChanged) {
-            sendMessage(user);
+            if (!StringUtils.isEmpty(password)) {
+                sendFullMessage(user, password);
+            } else {
+                sendActivationMessage(user);
+            }
+        } else if (!StringUtils.isEmpty(password)) {
+            sendDataMessage(user, user.getUsername(), password);
         }
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ua.Nazar.Rep.domain.Record;
 import ua.Nazar.Rep.domain.User;
 import ua.Nazar.Rep.repos.RecordRepo;
+import ua.Nazar.Rep.service.RecordService;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -23,11 +24,11 @@ import java.util.Map;
 @Controller
 public class RecordController {
 
-    private RecordRepo recordRepo;
+    private RecordService recordService;
 
     @Autowired
-    public void setRecordRepo(RecordRepo recordRepo) {
-        this.recordRepo = recordRepo;
+    public void setRecordService(RecordService recordService) {
+        this.recordService = recordService;
     }
 
     @GetMapping("/")
@@ -36,12 +37,7 @@ public class RecordController {
             Model model,
             @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 25) Pageable pageable
     ) {
-        Page<Record> page = recordRepo.findAll(pageable);
-
-
-        if (filter != null && !filter.isEmpty()) {
-            page = recordRepo.findAllByDateStartingWith(filter, pageable);
-        }
+        Page<Record> page = recordService.findAll(filter, pageable);
 
         model.addAttribute("page", page);
         model.addAttribute("filter", filter);
@@ -58,11 +54,7 @@ public class RecordController {
             @RequestParam(required = false, defaultValue = "") String filter,
             @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 25) Pageable pageable
     ) {
-        Page<Record> page = recordRepo.findAllByAuthor(user, pageable);
-
-        if (filter != null && !filter.isEmpty()) {
-            page = recordRepo.findAllByDateStartingWithAndAuthor(filter, user, pageable);
-        }
+        Page<Record> page = recordService.findAllByAuthor(user, filter, pageable);
 
         model.addAttribute("page", page);
         model.addAttribute("record", record);
@@ -86,7 +78,7 @@ public class RecordController {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
 
-            Page<Record> page = recordRepo.findAllByAuthor(user, pageable);
+            Page<Record> page = recordService.findAllByAuthor(user, pageable);
 
             model.addAttribute("record", record);
             model.addAttribute("page", page);
@@ -96,9 +88,9 @@ public class RecordController {
         } else {
             record.setAuthor(user);
             model.addAttribute("record", null);
-            recordRepo.save(record);
+            recordService.save(record);
 
-            Page<Record> page = recordRepo.findAllByAuthor(user, pageable);
+            Page<Record> page = recordService.findAllByAuthor(user, pageable);
 
             model.addAttribute("page", page);
             model.addAttribute("isCurrentUser", currentUser.equals(user));
@@ -115,7 +107,7 @@ public class RecordController {
             @RequestParam Long id
     ) {
         if (user.equals(currentUser.getId())) {
-            recordRepo.deleteById(id);
+            recordService.deleteById(id);
         }
 
         return "redirect:/user-records/" + user;

@@ -20,7 +20,7 @@ public class MailSender {
     private String username;
 
 
-    public void send(String emailTo, String subject, String message) {
+    void send(String emailTo, String subject, String message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
         mailMessage.setFrom(username);
