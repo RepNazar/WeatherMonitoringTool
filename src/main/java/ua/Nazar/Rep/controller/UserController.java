@@ -23,6 +23,10 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * @param model
+     * @return Users list
+     */
     @PreAuthorize("hasAuthority('MAIN_ADMIN')")
     @GetMapping
     public String userList(Model model) {
@@ -31,6 +35,11 @@ public class UserController {
         return "userList";
     }
 
+    /**
+     * @param user
+     * @param model
+     * @return User Editor
+     */
     @PreAuthorize("hasAuthority('MAIN_ADMIN')")
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, Model model) {
@@ -40,6 +49,16 @@ public class UserController {
         return "userEdit";
     }
 
+    /**
+     * @param username
+     * @param password
+     * @param passwordConfirm
+     * @param email
+     * @param form
+     * @param user
+     * @param model
+     * @return Redirect user page or re-enter edit
+     */
     @PreAuthorize("hasAuthority('MAIN_ADMIN')")
     @PostMapping
     public String userSave(
@@ -65,6 +84,11 @@ public class UserController {
         }
     }
 
+    /**
+     * @param model
+     * @param user
+     * @return Profile page
+     */
     @GetMapping("profile")
     public String getProfile(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("username", user.getUsername());
@@ -73,6 +97,14 @@ public class UserController {
         return "profile";
     }
 
+    /**
+     * @param user
+     * @param password
+     * @param email
+     * @param passwordConfirm
+     * @param model
+     * @return Redirect profile page or re-enter
+     */
     @PostMapping("profile")
     public String updateProfile(
             @AuthenticationPrincipal User user,

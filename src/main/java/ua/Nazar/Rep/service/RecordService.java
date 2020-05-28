@@ -18,6 +18,11 @@ public class RecordService {
         this.recordRepo = recordRepo;
     }
 
+    /**
+     * @param filter
+     * @param pageable
+     * @return Page of all records by filter
+     */
     public Page<Record> findAll(String filter, Pageable pageable){
         Page<Record> page = recordRepo.findAll(pageable);
 
@@ -27,10 +32,20 @@ public class RecordService {
         return page;
     }
 
+    /**
+     * @param pageable
+     * @return Page of all records
+     */
     public Page<Record> findAll(Pageable pageable) {
         return recordRepo.findAll(pageable);
     }
 
+    /**
+     * @param author
+     * @param filter
+     * @param pageable
+     * @return Page of records by author and filter
+     */
     public Page<Record> findAllByAuthor(User author, String filter, Pageable pageable) {
         Page<Record> page = recordRepo.findAllByAuthor(author, pageable);
 
@@ -40,14 +55,25 @@ public class RecordService {
         return page;
     }
 
+    /**
+     * @param author
+     * @param pageable
+     * @return Page of records by author
+     */
     public Page<Record> findAllByAuthor(User author, Pageable pageable) {
         return recordRepo.findAllByAuthor(author, pageable);
     }
 
+    /**
+     * @param record
+     */
     public void save(Record record){
         recordRepo.save(record);
     }
 
+    /**
+     * @param recordId
+     */
     public void deleteById(Long recordId){
         recordRepo.deleteById(recordId);
     }

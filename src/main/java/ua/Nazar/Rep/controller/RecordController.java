@@ -31,6 +31,12 @@ public class RecordController {
         this.recordService = recordService;
     }
 
+    /**
+     * @param filter
+     * @param model
+     * @param pageable
+     * @return Page with records by filter
+     */
     @GetMapping("/")
     public String getRecords(
             @RequestParam(required = false, defaultValue = "") String filter,
@@ -45,6 +51,15 @@ public class RecordController {
         return "records";
     }
 
+    /**
+     * @param currentUser
+     * @param user
+     * @param model
+     * @param record
+     * @param filter
+     * @param pageable
+     * @return Page of user records by filter
+     */
     @GetMapping("/user-records/{user}")
     public String userRecords(
             @AuthenticationPrincipal User currentUser,
@@ -64,6 +79,15 @@ public class RecordController {
         return "userRecords";
     }
 
+    /**
+     * @param currentUser
+     * @param user
+     * @param record
+     * @param bindingResult
+     * @param model
+     * @param pageable
+     * @return Redirect on user records or re-enter
+     */
     @PostMapping("/user-records/{user}")
     public String commitRecord(
             @AuthenticationPrincipal User currentUser,
@@ -100,6 +124,12 @@ public class RecordController {
 
     }
 
+    /**
+     * @param currentUser
+     * @param user
+     * @param id
+     * @return Redirect on user records
+     */
     @PostMapping("/user-records/{user}/delete")
     public String deleteRecord(
             @AuthenticationPrincipal User currentUser,
