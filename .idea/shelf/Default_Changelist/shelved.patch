@@ -1,0 +1,106 @@
+Index: target/classes/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>spring.datasource.url=jdbc:postgresql://localhost/weather_history\nspring.datasource.username=postgres\nspring.datasource.password=1cghsyu1\nspring.jpa.generate-ddl=false\nspring.jpa.show-sql=false\nspring.jpa.hibernate.ddl-auto=validate\n\n\nspring.freemarker.expose-request-attributes=true\n\nspring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true\n\nspring.mail.host=smtp.gmail.com\nspring.mail.username=weathermonitoringandhistory@gmail.com\nspring.mail.password=1gjksnt[1\nspring.mail.port=465\nspring.mail.protocol=smtps\nmail.debug=false\n\nspring.session.jdbc.initialize-schema=always\nspring.session.jdbc.table-name=SPRING_SESSION\n\nserver.port=8080\nhostname=localhost:${server.port}\n!hibernate.temp.use_jdbc_metadata_defaults=false\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- target/classes/application.properties	(revision bcc82ac4991a436b658905d08f8e4fd8b7998fbe)
++++ target/classes/application.properties	(date 1578335863362)
+@@ -1,6 +1,6 @@
+-spring.datasource.url=jdbc:postgresql://localhost/weather_history
+-spring.datasource.username=postgres
+-spring.datasource.password=1cghsyu1
++spring.datasource.url=${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost/weather_history}
++spring.datasource.username=${SPRING_DATASOURCE_USERNAME:postgres}
++spring.datasource.password=${SPRING_DATASOURCE_PASSWORD:1cghsyu1}
+ spring.jpa.generate-ddl=false
+ spring.jpa.show-sql=false
+ spring.jpa.hibernate.ddl-auto=validate
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"CompilerConfiguration\">\n    <annotationProcessing>\n      <profile name=\"Maven default annotation processors profile\" enabled=\"true\">\n        <sourceOutputDir name=\"target/generated-sources/annotations\" />\n        <sourceTestOutputDir name=\"target/generated-test-sources/test-annotations\" />\n        <outputRelativeToContentRoot value=\"true\" />\n        <module name=\"WeatherMonitoringTool_2.0\" />\n      </profile>\n    </annotationProcessing>\n  </component>\n  <component name=\"JavacSettings\">\n    <option name=\"ADDITIONAL_OPTIONS_OVERRIDE\">\n      <module name=\"WeatherMonitoringTool_2.0\" options=\"-parameters\" />\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(revision bcc82ac4991a436b658905d08f8e4fd8b7998fbe)
++++ .idea/compiler.xml	(date 1578336352643)
+@@ -7,11 +7,13 @@
+         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+         <outputRelativeToContentRoot value="true" />
+         <module name="WeatherMonitoringTool_2.0" />
++        <module name="WeatherMonitoringTool" />
+       </profile>
+     </annotationProcessing>
+   </component>
+   <component name="JavacSettings">
+     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
++      <module name="WeatherMonitoringTool" options="-parameters" />
+       <module name="WeatherMonitoringTool_2.0" options="-parameters" />
+     </option>
+   </component>
+Index: .idea/WeatherMonitoringTool.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/WeatherMonitoringTool.iml	(date 1589042061884)
++++ .idea/WeatherMonitoringTool.iml	(date 1589042061884)
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="JAVA_MODULE" version="4">
++  <component name="NewModuleRootManager" inherit-compiler-output="true">
++    <exclude-output />
++    <content url="file://$MODULE_DIR$" />
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\n  <component name=\"MavenProjectsManager\">\n    <option name=\"originalFiles\">\n      <list>\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\n    <output url=\"file://$PROJECT_DIR$/out\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision bcc82ac4991a436b658905d08f8e4fd8b7998fbe)
++++ .idea/misc.xml	(date 1578335365113)
+@@ -1,6 +1,9 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
++  <component name="JavaScriptSettings">
++    <option name="languageLevel" value="ES6" />
++  </component>
+   <component name="MavenProjectsManager">
+     <option name="originalFiles">
+       <list>
+@@ -8,7 +11,7 @@
+       </list>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"Encoding\">\n    <file url=\"file://$PROJECT_DIR$\" charset=\"UTF-8\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/encodings.xml	(revision bcc82ac4991a436b658905d08f8e4fd8b7998fbe)
++++ .idea/encodings.xml	(date 1578335844822)
+@@ -2,5 +2,6 @@
+ <project version="4">
+   <component name="Encoding">
+     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
++    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+   </component>
+ </project>
+\ No newline at end of file

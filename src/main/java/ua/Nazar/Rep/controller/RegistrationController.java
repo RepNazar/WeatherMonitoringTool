@@ -25,12 +25,22 @@ public class RegistrationController {
         this.userService = userService;
     }
 
+    /**
+     * @return registration page
+     */
     @GetMapping("/registration")
     public String registration() {
         return "registration";
     }
 
 
+    /**
+     * @param passwordConfirm
+     * @param user
+     * @param bindingResult
+     * @param model
+     * @return Redirects login page
+     */
     @PreAuthorize("hasAuthority('MAIN_ADMIN')")
     @PostMapping("/registration")
     public String addUser(
@@ -62,6 +72,11 @@ public class RegistrationController {
         return "redirect:/login";
     }
 
+    /**
+     * @param model
+     * @param code
+     * @return Login page with activation message
+     */
     @GetMapping("/activate/{code}")
     public String activate(Model model, @PathVariable String code) {
         boolean isActivated = userService.activateUser(code);

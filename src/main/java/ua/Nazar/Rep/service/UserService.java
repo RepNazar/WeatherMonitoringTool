@@ -20,6 +20,9 @@ public class UserService implements UserDetailsService {
 
     private UserRepo userRepo;
 
+    /**
+     * @param userRepo
+     */
     @Autowired
     public void setUserRepo(UserRepo userRepo) {
         this.userRepo = userRepo;
@@ -27,6 +30,9 @@ public class UserService implements UserDetailsService {
 
     private MailSender mailSender;
 
+    /**
+     * @param mailSender
+     */
     @Autowired
     public void setMailSender(MailSender mailSender) {
         this.mailSender = mailSender;
@@ -35,6 +41,9 @@ public class UserService implements UserDetailsService {
 
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * @param passwordEncoder
+     */
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
@@ -43,6 +52,11 @@ public class UserService implements UserDetailsService {
     @Value("${hostUEL}")
     private String hostURL;
 
+    /**
+     * @param username
+     * @return User by username
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByUsername(username);
@@ -54,6 +68,10 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    /**
+     * @param user
+     * @return is user not exist in database and added successfully
+     */
     public boolean addUser(User user) {
         User userFromDb = userRepo.findByUsername(user.getUsername());
 
@@ -74,6 +92,9 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    /**
+     * @param user
+     */
     private void sendActivationMessage(User user) {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
@@ -90,6 +111,11 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    /**
+     * @param user
+     * @param oldUsername
+     * @param password
+     */
     private void sendDataMessage(User user, String oldUsername, String password) {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
@@ -106,6 +132,10 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    /**
+     * @param user
+     * @param password
+     */
     private void sendFullMessage(User user, String password) {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
@@ -127,6 +157,10 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    /**
+     * @param code
+     * @return user!=null and successfully antivated
+     */
     public boolean activateUser(String code) {
         User user = userRepo.findByActivationCode(code);
 
@@ -141,10 +175,20 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    /**
+     * @return List of all users
+     */
     public List<User> findAll() {
         return userRepo.findAll();
     }
 
+    /**
+     * @param user
+     * @param username
+     * @param password
+     * @param email
+     * @param form
+     */
     public void saveUser(User user,
                          String username,
                          String password,
@@ -201,6 +245,11 @@ public class UserService implements UserDetailsService {
 
     }
 
+    /**
+     * @param user
+     * @param password
+     * @param email
+     */
     public void updateProfile(User user, String password, String email) {
         String userEmail = user.getEmail();
 

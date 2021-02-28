@@ -36,13 +36,27 @@ public class Record {
     @JoinColumn(name = "user_id")
     private User author;
 
+    /**
+     * @return Author name
+     */
     public String getAuthorName() {
         return author != null ? author.getUsername() : "<none>";
     }
 
+    /**
+     *
+     */
     public Record() {
     }
 
+    /**
+     * @param date
+     * @param temperature
+     * @param windSpeed
+     * @param windAngle
+     * @param pressure
+     * @param user
+     */
     public Record(String date, String temperature, String windSpeed, String windAngle, String pressure, User user) {
         this.date = date;
         this.temperature = temperature;
@@ -52,58 +66,100 @@ public class Record {
         this.author = user;
     }
 
+    /**
+     * @return id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * @return date
+     */
     public String getDate() {
         return date;
     }
 
+    /**
+     * @param date
+     */
     public void setDate(String date) {
         this.date = date;
     }
 
+    /**
+     * @return temperature
+     */
     public String getTemperature() {
         return temperature;
     }
 
+    /**
+     * @param temperature
+     */
     public void setTemperature(String temperature) {
         this.temperature = temperature;
     }
 
+    /**
+     * @return windSpeed
+     */
     public String getWindSpeed() {
         return windSpeed;
     }
 
+    /**
+     * @param windSpeed
+     */
     public void setWindSpeed(String windSpeed) {
         this.windSpeed = windSpeed;
     }
 
+    /**
+     * @return windAngle
+     */
     public String getWindAngle() {
         return windAngle;
     }
 
+    /**
+     * @param windAngle
+     */
     public void setWindAngle(String windAngle) {
         this.windAngle = windAngle;
     }
 
+    /**
+     * @return pressure
+     */
     public String getPressure() {
         return pressure;
     }
 
+    /**
+     * @param pressure
+     */
     public void setPressure(String pressure) {
         this.pressure = pressure;
     }
 
+    /**
+     * @return author
+     */
     public User getAuthor() {
         return author;
     }
 
+    /**
+     * @param author
+     */
     public void setAuthor(User author) {
         this.author = author;
     }

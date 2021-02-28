@@ -20,6 +20,11 @@ public class MailSender {
     private String username;
 
 
+    /**
+     * @param emailTo
+     * @param subject
+     * @param message
+     */
     void send(String emailTo, String subject, String message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
