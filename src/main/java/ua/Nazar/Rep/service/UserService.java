@@ -40,8 +40,8 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Value("${hostname}")
-    private String hostname;
+    @Value("${hostUEL}")
+    private String hostURL;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -80,9 +80,9 @@ public class UserService implements UserDetailsService {
                     "Hello, %s! \n\n" +
                             "Welcome to our Weather monitoring team.\n\n" +
                             "Please, visit next link for your account activation: \n" +
-                            "http://%s/activate/%s",
+                            "%s/activate/%s",
                     user.getUsername(),
-                    hostname,
+                    hostURL,
                     user.getActivationCode()
             );
 
@@ -115,11 +115,11 @@ public class UserService implements UserDetailsService {
                             "Username:\n%s\n" +
                             "Password:\n%s\n\n" +
                             "Please, visit next link for your account activation: \n" +
-                            "http://%s/activate/%s",
+                            "%s/activate/%s",
                     user.getUsername(),
                     user.getUsername(),
                     password,
-                    hostname,
+                    hostURL,
                     user.getActivationCode()
             );
 
@@ -135,7 +135,7 @@ public class UserService implements UserDetailsService {
         }
 
         user.setActivationCode(null);
-
+        user.setActive(true);
         userRepo.save(user);
 
         return true;
