@@ -1,0 +1,17 @@
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/config/EncryptionConfig.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/config/WebSecurityConfig.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/domain/User.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/controller/UserController.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/service/MailSender.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/repos/RecordRepo.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/Application.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/controller/RecordController.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/service/RecordService.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/domain/Record.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/repos/UserRepo.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/config/MailConfig.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/config/MvcConfig.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/domain/Role.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/service/UserService.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/controller/RegistrationController.java
+/home/nazarrep/dev/WeatherMonitoringTool_2.0/src/main/java/ua/Nazar/Rep/controller/ControllerUtils.java
