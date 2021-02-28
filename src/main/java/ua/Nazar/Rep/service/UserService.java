@@ -49,7 +49,7 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Value("${hostUEL}")
+    @Value("${hostURL}")
     private String hostURL;
 
     /**
